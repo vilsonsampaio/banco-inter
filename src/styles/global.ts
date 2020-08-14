@@ -12,12 +12,12 @@ export default createGlobalStyle`
 
   html {
     height: 100%;
-    
+
     font-size: 62.5%; /* 1rem = 10px */
   }
 
   body {
-    background: ${({ theme }) => theme.colors.background};
+    background: ${({ theme }) => theme.colors.lightGrey};
     color: ${({ theme }) => theme.colors.grey};
 
     text-rendering: optimizeLegibility !important;
