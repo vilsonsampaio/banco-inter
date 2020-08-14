@@ -2,8 +2,9 @@ import React from 'react';
 
 import Button from '../Button';
 import AccountDropdown from './AccountDropdown';
-import { BancoInter } from '../../assets/images';
 import { User } from './Header';
+
+import { BancoInter } from '../../assets/images';
 
 import { Container, Wrapper, LeftNav, RightNav } from './styles';
 
