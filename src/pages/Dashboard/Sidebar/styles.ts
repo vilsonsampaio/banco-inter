@@ -18,7 +18,7 @@ export const Container = styled.div`
 
     border-radius: ${theme.radius.default};
 
-    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.08);
+    box-shadow: ${theme.shadows.default};
   `}
 `;
 
