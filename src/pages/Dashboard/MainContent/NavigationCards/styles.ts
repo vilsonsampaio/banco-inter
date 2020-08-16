@@ -97,6 +97,10 @@ export const Card = styled(Button)`
     :nth-child(2) {
       svg {
         stroke: none;
+        
+        path {
+          fill: ${theme.colors.primary};
+        }
       }
     } 
   `}
