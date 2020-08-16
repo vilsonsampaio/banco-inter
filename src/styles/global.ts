@@ -29,6 +29,9 @@ export default createGlobalStyle`
     position: relative;
 
     min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
   }
   
   body, input, button {
