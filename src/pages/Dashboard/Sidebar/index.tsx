@@ -1,7 +1,7 @@
 import React from 'react';
 import { FiBarChart2 } from 'react-icons/fi';
 
-import { dashboardNavigation } from '../../../resources';
+import { sidebarNavigation } from '../../../resources';
 
 import Dropdown from './Dropdown';
 import AccountBalance from './AccountBalance';
@@ -19,7 +19,7 @@ const Sidebar: React.FC = () => {
         <FiBarChart2 size="1.6rem" />
       </AmountInvested>
 
-      {Object.entries(dashboardNavigation).map(([key, value]) => (
+      {Object.entries(sidebarNavigation).map(([key, value]) => (
         <Dropdown key={key} icon={value.icon} sectionName={key} />
       ))}
     </Container>  
