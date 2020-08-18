@@ -35,6 +35,10 @@ export const Container = styled(Button)`
           background: ${theme.colors.lightGrey};
 
           border-radius: 50%;
+
+          > svg {
+            stroke: ${theme.colors.primary};
+          }
         }
       }
 

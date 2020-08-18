@@ -27,7 +27,7 @@ const AccountBalance: React.FC = () => {
         variant="transparent" 
         onClick={() => setIsVisible((prevState) => !prevState)}
       >
-        {isVisible ? <FiEyeOff /> : <FiEye />}
+        {isVisible ? <FiEye /> : <FiEyeOff />}
       </Button>
     </Container>
   );
