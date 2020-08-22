@@ -1,18 +1,32 @@
 import React, { useState } from 'react';
 import { FiFileText, FiCreditCard, FiEye, FiEyeOff } from 'react-icons/fi';
+import { ResponsiveLine } from '@nivo/line';
+import { useTheme } from 'styled-components';
 
 import Button from '../../../../components/Button';
 
 import { PlataformaPAIIcon } from '../../../../assets/images/icons';
 import CreditCartIllustration from '../../../../assets/images/illustrations/card-illustration.png';
 
-import { Container, Card, Header, DataWrapper, LeftData, RightData, DataValue } from './styles';
+import { lineChartData } from '../../../../resources/';
+
+import { Container, Card, Header, DataWrapper, LeftData, RightData, DataValue, CustomTooltip } from './styles';
+
+type ChartValue = number | React.ReactText | undefined;
+
+const formatChartValue = (value: ChartValue): string => `${value || 0}%`;
 
 
 const AccountSummary: React.FC = () => {
   const [displayStatement, setDisplayStatement] = useState(false);
   const [displayInvestments, setDisplayInvestments] = useState(false);
+  const [investmentGrowth, setInvestmentGrowth] = useState(() => {
+    const [investments] = lineChartData;
+    const { y } = investments.data[investments.data.length - 1];
+    return formatChartValue(y);
+  });
 
+  const { colors } = useTheme();
 
   return (
     <Container>
@@ -34,10 +48,10 @@ const AccountSummary: React.FC = () => {
 
           <RightData>
             <span>Receita</span>
-            <DataValue income>{displayStatement ? 'R$ 8.552,22' : '---'}</DataValue>
+            <DataValue income>{displayStatement ? 'R$ 5.750,00' : '---'}</DataValue>
 
             <span>Despesas</span>
-            <DataValue outcome>{displayStatement ? 'R$ 7.948,55' : '---'}</DataValue>
+            <DataValue outcome>{displayStatement ? investmentGrowth : '---'}</DataValue>
           </RightData>
         </DataWrapper>
       </Card>
@@ -74,7 +88,45 @@ const AccountSummary: React.FC = () => {
 
         <DataWrapper>
           <LeftData>
-            Gráfico
+            <ResponsiveLine
+              data={lineChartData}
+              useMesh
+              enableArea
+              enableCrosshair={false}
+              curve='cardinal'
+              margin={{ top: 8, right: 8, bottom: 20, left: 8 }}
+              xScale={{ type: 'point' }}
+              yScale={{ 
+                type: 'linear', 
+                min: 'auto', 
+                max: 'auto', 
+                stacked: true, 
+                reverse: false, 
+              }}
+              tooltip={({ point }) => {
+                return (
+                  <CustomTooltip>
+                    {formatChartValue(point.data.yFormatted)}
+                  </CustomTooltip>
+                );
+              }}
+              axisTop={null}
+              axisRight={null}
+              axisBottom={{
+                orient: 'bottom',
+                tickSize: 0,
+                tickPadding: 8,
+                tickRotation: 0,
+              }}
+              axisLeft={null}
+              colors={colors.success}
+              lineWidth={1.5}
+              pointSize={8}
+              pointColor={colors.success}
+              pointLabel='y'
+              pointLabelYOffset={-12}
+              enableGridY={false}
+            />
           </LeftData>
 
           <RightData>
