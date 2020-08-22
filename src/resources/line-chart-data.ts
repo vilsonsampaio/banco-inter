@@ -30,5 +30,6 @@ export default [
         y: 32,
       },
     ],
+    investedAmount: 5750,
   },
 ];
