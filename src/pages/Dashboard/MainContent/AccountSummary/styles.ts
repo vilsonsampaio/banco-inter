@@ -11,6 +11,10 @@ type DataValueType = {
   outcome?: boolean;
 };
 
+type CustomTooltipType = {
+  rightArrow?: boolean;
+}
+
 const getData = 
   (colors: Theme['colors'], { income, outcome }: DataValueType): string => {
     if (income) return colors.success;
@@ -126,8 +130,8 @@ export const LeftData = styled.div`
   `}
 `;
 
-export const CustomTooltip = styled.div`
-  ${({ theme }) => css`
+export const CustomTooltip = styled.div<CustomTooltipType>`
+  ${({ theme, rightArrow }) => css`
     padding: 0.4rem 0.8rem;
 
     background: ${theme.colors.lightGrey};
@@ -144,7 +148,7 @@ export const CustomTooltip = styled.div`
       content: '';
 
       position: absolute;
-      left: 50%;
+      left: ${rightArrow ? `100%` : `50%`};
       bottom: -50%;
 
       height: 0;
@@ -153,13 +157,21 @@ export const CustomTooltip = styled.div`
 
       border-width: 0.8rem;
       border-style: solid;
-      border-color: ${theme.colors.lightGrey} transparent transparent transparent;
+      border-color: ${rightArrow
+        ? `transparent transparent transparent ${theme.colors.lightGrey}`
+        : `${theme.colors.lightGrey} transparent transparent
+        transparent`
+      };
       
-      transform: translate3d(-50%, 25%, 0);
+      transform: ${rightArrow 
+        ? `translate3d(0, -175%, 0)`
+        : `translate3d(-50%, 25%, 0)`
+      };
     }
     
     :after {
       content: '';
+
       display: block;
     }
   `}
