@@ -1,18 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { FiFileText, FiCreditCard, FiEye, FiEyeOff } from 'react-icons/fi';
+import { useTheme } from 'styled-components';
+import { ResponsiveBar } from '@nivo/bar';
+import { ResponsiveLine } from '@nivo/line';
 
 import Button from '../../../../components/Button';
 
 import { PlataformaPAIIcon } from '../../../../assets/images/icons';
 import CreditCartIllustration from '../../../../assets/images/illustrations/card-illustration.png';
 
-import { Container, Card, Header, DataWrapper, LeftData, RightData, DataValue } from './styles';
+import { barChartData, lineChartData } from '../../../../resources/';
+
+import { Container, Card, Header, DataWrapper, LeftData, RightData, DataValue, CustomTooltip } from './styles';
+
+type FormatChartValueType = number | React.ReactText | undefined;
+type FormatToR$ValueType = number | React.ReactText;
+
+const formatChartValue = (value: FormatChartValueType): string => `${value || 0}%`;
+const formatToR$Value = (value: FormatToR$ValueType): string => `${value.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}`;
 
 
 const AccountSummary: React.FC = () => {
   const [displayStatement, setDisplayStatement] = useState(false);
   const [displayInvestments, setDisplayInvestments] = useState(false);
 
+  const investmentGrowth = useMemo(() => {
+    const [investments] = lineChartData;
+    const { y } = investments.data[investments.data.length - 1];
+
+    return formatChartValue(y);
+  }, []);
+
+  const { colors } = useTheme();
 
   return (
     <Container>
@@ -30,14 +49,68 @@ const AccountSummary: React.FC = () => {
         </Header>
 
         <DataWrapper>
-          <LeftData>Gráfico</LeftData>
+          <LeftData>
+            <ResponsiveBar 
+              data={barChartData}
+              indexBy="month"
+              keys={['outcome', 'income']}
+              colors={({ id, data }) => data[`${id}Color`]}
+              margin={{ top: 0, right: -8, bottom: 20, left: -8 }}
+              padding={0.7}
+              axisTop={null}
+              axisRight={null}
+              axisLeft={null}
+              axisBottom={{
+                tickSize: 0,
+                tickPadding: 8,
+                tickRotation: 0,
+              }}
+              tooltip={(chart) => {
+                const label = chart.id === 'income' ? 'Receita' : 'Despesas';
+                const value = chart.data[chart.id];
+                return (
+                  <CustomTooltip rightArrow>
+                    {`${label}: ${formatToR$Value(value)}`}
+                  </CustomTooltip>
+                );
+              }}
+              theme={{
+                tooltip: {
+                  container: {
+                    background: 'transparent',
+                    boxShadow: 'none',
+                    padding: 0,
+                    borderRadius: 0,
+                  },
+                  tableCell: {
+                    padding: 0,
+                  },
+                },
+              }}
+              animate
+              motionStiffness={90}
+              motionDamping={15}
+              enableGridY={false}
+              enableLabel={false}
+            />
+          </LeftData>
 
           <RightData>
             <span>Receita</span>
-            <DataValue income>{displayStatement ? 'R$ 8.552,22' : '---'}</DataValue>
+            <DataValue income>
+              {displayStatement 
+                ? formatToR$Value(barChartData[barChartData.length - 1].income) 
+                : '---'
+              }
+            </DataValue>
 
             <span>Despesas</span>
-            <DataValue outcome>{displayStatement ? 'R$ 7.948,55' : '---'}</DataValue>
+            <DataValue outcome>
+              {displayStatement 
+                ? formatToR$Value(barChartData[barChartData.length - 1].outcome) 
+                : '---'
+              }
+            </DataValue>
           </RightData>
         </DataWrapper>
       </Card>
@@ -74,15 +147,52 @@ const AccountSummary: React.FC = () => {
 
         <DataWrapper>
           <LeftData>
-            Gráfico
+            <ResponsiveLine
+              data={lineChartData}
+              useMesh
+              enableArea
+              enableCrosshair={false}
+              curve='cardinal'
+              margin={{ top: 8, right: 8, bottom: 20, left: 8 }}
+              xScale={{ type: 'point' }}
+              yScale={{ type: 'linear', min: 'auto', max: 'auto', reverse: false, }}
+              tooltip={({ point }) => {
+                return (
+                  <CustomTooltip>
+                    {formatChartValue(point.data.yFormatted)}
+                  </CustomTooltip>
+                );
+              }}
+              axisTop={null}
+              axisRight={null}
+              axisBottom={{ orient: 'bottom', tickSize: 0, tickPadding: 8, tickRotation: 0, }}
+              axisLeft={null}
+              colors={colors.success}
+              lineWidth={1.5}
+              pointSize={8}
+              pointColor={colors.success}
+              pointLabel='y'
+              pointLabelYOffset={-12}
+              enableGridY={false}
+            />
           </LeftData>
 
           <RightData>
             <span>Total investido</span>
-            <DataValue>{displayInvestments ? 'R$ 5.750,00' : '---'}</DataValue>
+            <DataValue>
+              {displayInvestments 
+                ? formatToR$Value(lineChartData[0].investedAmount)
+                : '---'
+              }
+            </DataValue>
 
             <span>Evolução no mês</span>
-            <DataValue>{displayInvestments ? '20%' : '---'}</DataValue>
+            <DataValue>
+              {displayInvestments 
+                ? investmentGrowth
+                : '---'
+              }
+            </DataValue>
           </RightData>
         </DataWrapper>
       </Card>

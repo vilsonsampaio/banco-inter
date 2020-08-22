@@ -11,6 +11,10 @@ type DataValueType = {
   outcome?: boolean;
 };
 
+type CustomTooltipType = {
+  rightArrow?: boolean;
+}
+
 const getData = 
   (colors: Theme['colors'], { income, outcome }: DataValueType): string => {
     if (income) return colors.success;
@@ -100,20 +104,77 @@ export const DataWrapper = styled.div`
 `;
 
 export const LeftData = styled.div`
-  width: 100%;
+  ${({ theme }) => css`
+    width: 100%;
+    height: 100%;
 
-  max-width: 55%;
+    max-width: 55%;
+    max-height: 9.6rem;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  margin-right: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    margin-right: 0.8rem;
 
-  > img {
-    width: auto;
-    height: 8.4rem;
-  }
+    > img {
+      width: auto;
+      height: 8.4rem;
+    }
+
+    svg text {
+      font-family: inherit !important;
+      font-size: ${theme.fontSizes.tiny} !important;
+      fill: ${theme.colors.grey} !important;
+    }
+  `}
+`;
+
+export const CustomTooltip = styled.div<CustomTooltipType>`
+  ${({ theme, rightArrow }) => css`
+    padding: 0.4rem 0.8rem;
+
+    background: ${theme.colors.lightGrey};
+    
+    font-size: ${theme.fontSizes.tiny};
+    
+    border-radius: ${theme.radius.small};
+    
+    box-shadow: 0 -0.1rem 0.2rem rgba(0, 0, 0, 0.28);
+
+    text-align: center;
+    
+    :before {
+      content: '';
+
+      position: absolute;
+      left: ${rightArrow ? `100%` : `50%`};
+      bottom: -50%;
+
+      height: 0;
+
+      display: block;
+
+      border-width: 0.8rem;
+      border-style: solid;
+      border-color: ${rightArrow
+        ? `transparent transparent transparent ${theme.colors.lightGrey}`
+        : `${theme.colors.lightGrey} transparent transparent
+        transparent`
+      };
+      
+      transform: ${rightArrow 
+        ? `translate3d(0, -175%, 0)`
+        : `translate3d(-50%, 25%, 0)`
+      };
+    }
+    
+    :after {
+      content: '';
+
+      display: block;
+    }
+  `}
 `;
 
 export const RightData = styled.div`
@@ -131,7 +192,5 @@ export const RightData = styled.div`
 export const DataValue = styled.div<DataValueType>`
   ${({ theme, income, outcome }) => css`
     color: ${getData(theme.colors, { income, outcome })};
-
-    font-size: ${theme.fontSizes.default};
   `}
 `;
