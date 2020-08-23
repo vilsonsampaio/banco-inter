@@ -8,6 +8,7 @@ import Button from '../../../../components/Button';
 
 import { PlataformaPAIIcon } from '../../../../assets/images/icons';
 import CreditCartIllustration from '../../../../assets/images/illustrations/card-illustration.png';
+import { ReactComponent as HiddenData } from '../../../../assets/images/illustrations/hidden-data.svg'
 
 import { barChartData, lineChartData } from '../../../../resources/';
 
@@ -96,7 +97,9 @@ const AccountSummary: React.FC = () => {
                   enableLabel={false}
                 />
               )
-              : null
+              : (
+                <HiddenData />
+              )
             }
             
           </LeftData>
@@ -184,7 +187,9 @@ const AccountSummary: React.FC = () => {
                   enableGridY={false}
                 />
               )
-              : null
+              : (
+                <HiddenData />
+              )
             }
           </LeftData>
 
