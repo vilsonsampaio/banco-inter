@@ -52,7 +52,7 @@ export const Card = styled.article`
     
     border-radius: ${theme.radius.default};
     
-    box-shadow: ${theme.shadows.default};
+    box-shadow: ${theme.shadows.flat};
   `}
 `;
 

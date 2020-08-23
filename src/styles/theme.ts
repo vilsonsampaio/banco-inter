@@ -2,6 +2,7 @@ export default {
   title: 'light',
   colors: {
     primary: '#FF8700',
+    primaryDark: '#FF7A00',
     secondary: '#FF500F',
 
     grey: '#8C92A5', 
@@ -10,6 +11,8 @@ export default {
 
     success: '#20C05C',
     error: '#FD4F48',
+
+    yellow: '#FFED00',
     
     background: '#FFF',
   },
@@ -34,6 +37,7 @@ export default {
     tiny: '0.2rem',
   },
   shadows: {
-    default: '0 0.5rem 2rem rgba(0, 0, 0, 0.08)',
+    default: '0rem 0.5rem 2rem rgba(0, 0, 0, 0.08)',
+    flat: '0rem  0.2rem 0.2rem rgba(0, 0, 0, 0.08)',
   },
 } as const;
