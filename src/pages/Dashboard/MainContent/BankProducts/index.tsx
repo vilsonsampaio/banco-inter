@@ -7,7 +7,7 @@ import Button from '../../../../components/Button';
 
 import { bankProducts } from '../../../../resources';
 
-import { Container, ShoppingButton, Products, ProductCard, EquityButton, LoanButton } from './styles';
+import { Container, ShoppingButton, Products, ProductCard, EquitySection, LoanSection } from './styles';
 
 
 const BankProducts: React.FC = () => {
@@ -16,7 +16,7 @@ const BankProducts: React.FC = () => {
   return (
     <Container>
       <div>
-        <ShoppingButton background={colors.lightGrey} >
+        <ShoppingButton background={colors.lightGrey}>
           <FiShoppingCart size={32} />
 
           <div>
@@ -39,7 +39,7 @@ const BankProducts: React.FC = () => {
       </div>
 
       <div>
-        <EquityButton background={colors.primaryDark}>
+        <EquitySection>
           <h3>Home Equity Banco Inter</h3>
 
           <div>
@@ -66,14 +66,14 @@ const BankProducts: React.FC = () => {
               Solicitar agora
             </Button>
           </div>
-        </EquityButton>
+        </EquitySection>
 
-        <LoanButton background={colors.secondary}>
+        <LoanSection>
           <h3>
             <span>Quer ficar livre dos juros altos?</span>
 
             Empréstimo Consignado,
-            <br /> o crédito para o seu momento
+            <br />o crédito para o seu momento
           </h3>
 
           <div>
@@ -93,7 +93,7 @@ const BankProducts: React.FC = () => {
               Solicitar agora
             </Button>
           </div>
-        </LoanButton>
+        </LoanSection>
       </div>
     </Container>
   );

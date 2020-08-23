@@ -1,9 +1,11 @@
 import styled, { css } from 'styled-components';
 
 import { Container as ButtonContainer } from '../../../../components/Button/styles';
-import { Navigation, Card } from '../NavigationCards/styles';
 
 import ButtonBackground from '../../../../assets/images/illustrations/button-background.svg'
+
+import { Navigation, Card } from '../NavigationCards/styles';
+
 
 export const Container = styled.section`
   ${({ theme }) => css`
@@ -113,7 +115,7 @@ export const ProductCard = styled(Card)`
   `}
 `;
 
-export const EquityButton = styled(ButtonContainer)`
+export const EquitySection = styled.section`
   ${({ theme }) => css`
     width: 100%;
     height: 100%;
@@ -121,13 +123,14 @@ export const EquityButton = styled(ButtonContainer)`
     max-width: 38.4rem;
     max-height: 18.4rem;
 
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
 
     padding: 1.6rem 2.4rem;
 
-    background-image: url(${ButtonBackground});
+    background: url(${ButtonBackground}), ${theme.colors.primaryDark};
     color: ${theme.colors.yellow};
 
     border-radius: ${theme.radius.default};
@@ -170,9 +173,9 @@ export const EquityButton = styled(ButtonContainer)`
   `}
 `;
 
-export const LoanButton = styled(EquityButton)`
+export const LoanSection = styled(EquitySection)`
   ${({ theme }) => css`
-    background-image: none;
+    background: ${theme.colors.secondary};
 
     > h3 {
       text-align: left;
