@@ -14,6 +14,10 @@ export default createGlobalStyle`
     height: 100%;
 
     font-size: 62.5%; /* 1rem = 10px */
+
+    @media (min-width: 1981px) {
+      font-size: 80%;
+    };
   }
 
   body {

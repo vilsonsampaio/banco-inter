@@ -58,8 +58,9 @@ const AccountSummary: React.FC = () => {
                   indexBy="month"
                   keys={['outcome', 'income']}
                   colors={({ id, data }) => data[`${id}Color`]}
-                  margin={{ top: 0, right: -8, bottom: 20, left: -8 }}
-                  padding={0.7}
+                  margin={{ top: 8, right: -8, bottom: 24, left: -8 }}
+                  padding={0.88}
+                  borderRadius={2}
                   axisTop={null}
                   axisRight={null}
                   axisLeft={null}
@@ -71,8 +72,12 @@ const AccountSummary: React.FC = () => {
                   tooltip={(chart) => {
                     const label = chart.id === 'income' ? 'Receita' : 'Despesas';
                     const value = chart.data[chart.id];
+
                     return (
-                      <CustomTooltip rightArrow>
+                      <CustomTooltip
+                        rightArrow={chart.index >= 3}
+                        leftArrow={chart.index < 3}
+                      >
                         {`${label}: ${formatToR$Value(value)}`}
                       </CustomTooltip>
                     );
@@ -132,7 +137,10 @@ const AccountSummary: React.FC = () => {
 
         <DataWrapper>
           <LeftData>
-            <img src={CreditCartIllustration} alt="Cartão de Crédito Sem Anuidade" />
+            <img 
+              src={CreditCartIllustration} 
+              alt="Cartão de Crédito Sem Anuidade" 
+            />
           </LeftData>
 
           <RightData>
@@ -164,7 +172,7 @@ const AccountSummary: React.FC = () => {
                   enableArea
                   enableCrosshair={false}
                   curve='cardinal'
-                  margin={{ top: 8, right: 8, bottom: 20, left: 8 }}
+                  margin={{ top: 8, right: 8, bottom: 24, left: 12 }}
                   xScale={{ type: 'point' }}
                   yScale={{ type: 'linear', min: 'auto', max: 'auto', reverse: false }}
                   tooltip={({ point }) => {

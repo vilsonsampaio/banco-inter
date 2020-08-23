@@ -14,10 +14,14 @@ export const Container = styled.footer`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  margin-top: 3.2rem;
 `;
 
 export const FooterSection = styled(Container)<FooterSectionType>`
   ${({ theme, background }) => css`
+    margin-top: 0;
+    
     background: ${background || transparentize(0.92, theme.colors.grey)};
 
     :last-of-type {

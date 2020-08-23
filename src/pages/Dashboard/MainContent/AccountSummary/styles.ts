@@ -13,6 +13,7 @@ type DataValueType = {
 
 type CustomTooltipType = {
   rightArrow?: boolean;
+  leftArrow?: boolean;
 }
 
 const getData = 
@@ -61,8 +62,6 @@ export const Header = styled.div<HeaderType>`
     display: flex;
     justify-content: flex-start;
 
-    margin-bottom: 0.8rem;
-
     > svg {
       width: auto;
       height: 1.6rem;
@@ -109,7 +108,7 @@ export const LeftData = styled.div`
     height: 100%;
 
     max-width: 55%;
-    max-height: 9.6rem;
+    max-height: 11.2rem;
 
     display: flex;
     justify-content: center;
@@ -122,16 +121,22 @@ export const LeftData = styled.div`
       height: 8.4rem;
     }
 
-    svg text {
-      font-family: inherit !important;
-      font-size: ${theme.fontSizes.tiny} !important;
-      fill: ${theme.colors.grey} !important;
+    svg {
+      g rect {
+        stroke-width: 1.5;
+      }
+
+      text {
+        font-family: inherit !important;
+        font-size: ${theme.fontSizes.tiny} !important;
+        fill: ${theme.colors.grey} !important;
+      }
     }
   `}
 `;
 
 export const CustomTooltip = styled.div<CustomTooltipType>`
-  ${({ theme, rightArrow }) => css`
+  ${({ theme, rightArrow, leftArrow }) => css`
     padding: 0.4rem 0.8rem;
 
     background: ${theme.colors.lightGrey};
@@ -148,7 +153,7 @@ export const CustomTooltip = styled.div<CustomTooltipType>`
       content: '';
 
       position: absolute;
-      left: ${rightArrow ? `100%` : `50%`};
+      left: ${rightArrow ? `100%` : (leftArrow && `2%`) || `50%`};
       bottom: -50%;
 
       height: 0;
@@ -159,13 +164,15 @@ export const CustomTooltip = styled.div<CustomTooltipType>`
       border-style: solid;
       border-color: ${rightArrow
         ? `transparent transparent transparent ${theme.colors.lightGrey}`
-        : `${theme.colors.lightGrey} transparent transparent
-        transparent`
+        : (leftArrow && 
+        `transparent ${theme.colors.lightGrey} transparent transparent`) || 
+        `${theme.colors.lightGrey} transparent transparent transparent`
       };
       
       transform: ${rightArrow 
         ? `translate3d(0, -175%, 0)`
-        : `translate3d(-50%, 25%, 0)`
+        : (leftArrow && `translate3d(-100%, -175%, 0)`) ||
+        `translate3d(-50%, 25%, 0)`
       };
     }
     
