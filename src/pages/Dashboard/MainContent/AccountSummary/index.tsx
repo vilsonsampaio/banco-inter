@@ -8,6 +8,7 @@ import Button from '../../../../components/Button';
 
 import { PlataformaPAIIcon } from '../../../../assets/images/icons';
 import CreditCartIllustration from '../../../../assets/images/illustrations/card-illustration.png';
+import { ReactComponent as HiddenData } from '../../../../assets/images/illustrations/hidden-data.svg'
 
 import { barChartData, lineChartData } from '../../../../resources/';
 
@@ -50,49 +51,62 @@ const AccountSummary: React.FC = () => {
 
         <DataWrapper>
           <LeftData>
-            <ResponsiveBar 
-              data={barChartData}
-              indexBy="month"
-              keys={['outcome', 'income']}
-              colors={({ id, data }) => data[`${id}Color`]}
-              margin={{ top: 0, right: -8, bottom: 20, left: -8 }}
-              padding={0.7}
-              axisTop={null}
-              axisRight={null}
-              axisLeft={null}
-              axisBottom={{
-                tickSize: 0,
-                tickPadding: 8,
-                tickRotation: 0,
-              }}
-              tooltip={(chart) => {
-                const label = chart.id === 'income' ? 'Receita' : 'Despesas';
-                const value = chart.data[chart.id];
-                return (
-                  <CustomTooltip rightArrow>
-                    {`${label}: ${formatToR$Value(value)}`}
-                  </CustomTooltip>
-                );
-              }}
-              theme={{
-                tooltip: {
-                  container: {
-                    background: 'transparent',
-                    boxShadow: 'none',
-                    padding: 0,
-                    borderRadius: 0,
-                  },
-                  tableCell: {
-                    padding: 0,
-                  },
-                },
-              }}
-              animate
-              motionStiffness={90}
-              motionDamping={15}
-              enableGridY={false}
-              enableLabel={false}
-            />
+            {displayStatement
+              ? (
+                <ResponsiveBar 
+                  data={barChartData}
+                  indexBy="month"
+                  keys={['outcome', 'income']}
+                  colors={({ id, data }) => data[`${id}Color`]}
+                  margin={{ top: 8, right: -8, bottom: 24, left: -8 }}
+                  padding={0.88}
+                  borderRadius={2}
+                  axisTop={null}
+                  axisRight={null}
+                  axisLeft={null}
+                  axisBottom={{
+                    tickSize: 0,
+                    tickPadding: 8,
+                    tickRotation: 0,
+                  }}
+                  tooltip={(chart) => {
+                    const label = chart.id === 'income' ? 'Receita' : 'Despesas';
+                    const value = chart.data[chart.id];
+
+                    return (
+                      <CustomTooltip
+                        rightArrow={chart.index >= 3}
+                        leftArrow={chart.index < 3}
+                      >
+                        {`${label}: ${formatToR$Value(value)}`}
+                      </CustomTooltip>
+                    );
+                  }}
+                  theme={{
+                    tooltip: {
+                      container: {
+                        background: 'transparent',
+                        boxShadow: 'none',
+                        padding: 0,
+                        borderRadius: 0,
+                      },
+                      tableCell: {
+                        padding: 0,
+                      },
+                    },
+                  }}
+                  animate
+                  motionStiffness={90}
+                  motionDamping={15}
+                  enableGridY={false}
+                  enableLabel={false}
+                />
+              )
+              : (
+                <HiddenData />
+              )
+            }
+            
           </LeftData>
 
           <RightData>
@@ -123,7 +137,10 @@ const AccountSummary: React.FC = () => {
 
         <DataWrapper>
           <LeftData>
-            <img src={CreditCartIllustration} alt="Cartão de Crédito Sem Anuidade" />
+            <img 
+              src={CreditCartIllustration} 
+              alt="Cartão de Crédito Sem Anuidade" 
+            />
           </LeftData>
 
           <RightData>
@@ -147,34 +164,41 @@ const AccountSummary: React.FC = () => {
 
         <DataWrapper>
           <LeftData>
-            <ResponsiveLine
-              data={lineChartData}
-              useMesh
-              enableArea
-              enableCrosshair={false}
-              curve='cardinal'
-              margin={{ top: 8, right: 8, bottom: 20, left: 8 }}
-              xScale={{ type: 'point' }}
-              yScale={{ type: 'linear', min: 'auto', max: 'auto', reverse: false, }}
-              tooltip={({ point }) => {
-                return (
-                  <CustomTooltip>
-                    {formatChartValue(point.data.yFormatted)}
-                  </CustomTooltip>
-                );
-              }}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={{ orient: 'bottom', tickSize: 0, tickPadding: 8, tickRotation: 0, }}
-              axisLeft={null}
-              colors={colors.success}
-              lineWidth={1.5}
-              pointSize={8}
-              pointColor={colors.success}
-              pointLabel='y'
-              pointLabelYOffset={-12}
-              enableGridY={false}
-            />
+            {displayInvestments
+              ? (
+                <ResponsiveLine
+                  data={lineChartData}
+                  useMesh
+                  enableArea
+                  enableCrosshair={false}
+                  curve='cardinal'
+                  margin={{ top: 8, right: 8, bottom: 24, left: 12 }}
+                  xScale={{ type: 'point' }}
+                  yScale={{ type: 'linear', min: 'auto', max: 'auto', reverse: false }}
+                  tooltip={({ point }) => {
+                    return (
+                      <CustomTooltip>
+                        {formatChartValue(point.data.yFormatted)}
+                      </CustomTooltip>
+                    );
+                  }}
+                  axisTop={null}
+                  axisRight={null}
+                  axisBottom={{ orient: 'bottom', tickSize: 0, tickPadding: 8, tickRotation: 0 }}
+                  axisLeft={null}
+                  colors={colors.success}
+                  lineWidth={1.5}
+                  pointSize={8}
+                  pointColor={colors.success}
+                  pointLabel='y'
+                  pointLabelYOffset={-12}
+                  enableGridY={false}
+                />
+              )
+              : (
+                <HiddenData />
+              )
+            }
           </LeftData>
 
           <RightData>

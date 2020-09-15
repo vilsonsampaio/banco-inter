@@ -5,24 +5,29 @@ import { sidebarNavigation } from '../../../resources';
 
 import Dropdown from './Dropdown';
 import AccountBalance from './AccountBalance';
+import HelpDesk from './HelpDesk';
 
-import { Container, AmountInvested } from './styles';
+import { Wrapper, Container, AmountInvested } from './styles';
 
 const Sidebar: React.FC = () => {
   return (
-    <Container>
-      <AccountBalance />
-      
-      <AmountInvested>
-        Ver Total Investido
+    <Wrapper>
+      <Container>
+        <AccountBalance />
         
-        <FiBarChart2 size="1.6rem" />
-      </AmountInvested>
-
-      {Object.entries(sidebarNavigation).map(([key, value]) => (
-        <Dropdown key={key} icon={value.icon} sectionName={key} />
-      ))}
-    </Container>  
+        <AmountInvested>
+          Ver Total Investido
+          
+          <FiBarChart2 size="1.6rem" />
+        </AmountInvested>
+  
+        {Object.entries(sidebarNavigation).map(([key, value]) => (
+          <Dropdown key={key} icon={value.icon} sectionName={key} />
+        ))}
+      </Container>  
+  
+      <HelpDesk />
+    </Wrapper>
   );
 }
 

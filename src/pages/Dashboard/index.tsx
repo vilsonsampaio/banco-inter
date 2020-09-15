@@ -1,6 +1,8 @@
 import React from 'react';
 
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+
 import Sidebar from './Sidebar';
 import MainContent from './MainContent';
 
@@ -19,6 +21,8 @@ const Dashboard: React.FC = () => {
           <MainContent />
         </Wrapper>
       </Container>
+
+      <Footer />
     </>
   );
 }
